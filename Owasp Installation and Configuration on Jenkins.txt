@@ -1,0 +1,92 @@
+To Install and configure Owasp on Jenkins
+
+owasp Dependency Check - used for scanning publicly announced vulnerabilities that may be present in my source code
+
+* add and install the plugins
+ OWASP Dependency-Check
+ Eclipse Temurin Installer
+
+To Configure Dependency Check
+  
+* select Manage Jenkins
+* Global Tool Configuration
+* scroll to dependency check and add
+* Name - DP-Check
+* Checkbox Install automatically
+* add Installer and select Dependency-Check an ad version 7.2.0
+* Click Apply
+
+* scroll back up and Add Maven
+* Name - Maven
+* checkbox install automatically
+* use the already version there
+
+
+* scroll back up and Add JDK
+* name - OpenJDK-11
+* checkbox install automatically
+* leave the commercial version
+* close the JDK and add installer under checkbox
+* select install from adoptium.net
+* select JDK-11
+* Click apply
+
+
+Back to Dashboard
+
+* Create Job and select free
+* give a name Owasp DP-Chek
+* check Discard old builds
+* Max of builds - 2
+* select Git
+* copy and paste git url(spring-petcinic/spring-framework-petclinic.git)
+* select credentials of the repo is private
+* select branch of the repo
+* click ADD BUILD STEP uner Build steps
+* select invoke Dependency-Check
+* inside the Arguments type    --format HTML
+* select Apply
+* Build
+
+* check Jeckin Status after few minutes
+ - sudo systemctl status Jenkins
+
+$when the build is successful
+
+* Create Pipeline job
+* name DP-Check
+* try sample hello world on th definition
+* edit stage to "SCM" as we are geting the sourcode from GiT
+* copy the stage subset and paste below (Image 1)
+* select Pipeline syntax and open link in a new tab
+* under sample step select DependencyCheck:Invoke Dependency-Check
+* on Arguments, type --format HTML
+* click on Generate Pipeline Script 
+* Copy Output
+* sroll up to sample Step
+* Select DependencyCheckPublisher: Dependency-Check results
+* Go back to Definition(first tab) and paste output copied to the second stage(image2)
+
+* back to Sample Step o the second tab
+* select git:Git
+* copy the sourcecode url and paste
+* select the branch
+* skip credentials except its a private repo
+* uncheck include in polling
+* uncheck include in changelog
+* generate Pipeline Script
+* copy output
+* paste it on the first stage(image 3)
+
+* back to pipeline job
+* select configure
+* under definition on script select Hello World
+* copy stage and paste below
+* make it look like *IMAGE4*adding the git;Git output and below the DPCheck output
+* save and build Now
+* check the console
+*finish Success
+
+* check workspace
+* open dependency-chrck-report.html 
+*

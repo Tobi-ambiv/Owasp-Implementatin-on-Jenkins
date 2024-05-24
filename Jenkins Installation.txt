@@ -1,0 +1,44 @@
+Jenkins Installation
+
+
+Install JDK first before installing Jenkins
+
+sudo apt-get update
+
+sudo apt-get install fontconfig openjdk-17-jre 
+
+java -version
+
+
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+    https://pkg.jenkins.io/debian/jenkins.io-2023.key
+
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+    https://pkg.jenkins.io/debian binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install Jenkins
+
+sudo systemctl status jenkins
+
+
+
+
+ensure port 8080 to be open on inbound rules
+
+$which java     - this is to know java path
+
+-- go to Global Tool Configuration
+-- scroll to JDK and click add jdk
+
+-- Name - java_home
+
+-- JAVA_HOME - /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+
+$find / -type f -name java      to find where java is installed
+
+copy and paste /usr/lib/jvm/java-11-openjdk-amd64/bin/java  
+
+
